@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blend Sin Etiquetas — Formulario</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :root {
+    --crema: #FAF6F0;
+    --grafito: #2C2C2C;
+    --borgona: #66273b;
+    --rosa: #fb6376;
+    --arena: #E8DDD0;
+    --gris: #888;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--crema);
+    color: var(--grafito);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .form-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--arena);
+  }
+
+  .intro-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--borgona);
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .intro p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: #555;
+    margin-bottom: 0.85rem;
+  }
+
+  .intro p:last-child { margin-bottom: 0; }
+
+  /* ── CAMPOS ── */
+  .field-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grafito);
+    margin-bottom: 7px;
+  }
+
+  .field-optional {
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--gris);
+    margin-left: 5px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--grafito);
+    background: #fff;
+    border: 1px solid var(--arena);
+    border-radius: 0;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: var(--borgona);
+    box-shadow: 0 0 0 2px rgba(102,39,59,0.08);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #bbb;
+    font-weight: 300;
+  }
+
+  textarea {
+    resize: none;
+    min-height: 100px;
+    line-height: 1.65;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  /* ── DIVISOR ── */
+  .divider {
+    height: 1px;
+    background: var(--arena);
+    margin: 1.75rem 0;
+  }
+
+  /* ── INTERESES ── */
+  .intereses-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grafito);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .intereses-hint {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gris);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid var(--arena);
+    background: #fff;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--grafito);
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+  }
+
+  .chip input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .chip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid var(--arena);
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .chip:hover {
+    border-color: var(--borgona);
+    color: var(--borgona);
+  }
+
+  .chip.active {
+    border-color: var(--borgona);
+    background: rgba(102,39,59,0.06);
+    color: var(--borgona);
+  }
+
+  .chip.active .chip-dot {
+    background: var(--borgona);
+    border-color: var(--borgona);
+  }
+
+  /* Campo "otro" */
+  .otro-field {
+    display: none;
+    margin-top: 10px;
+  }
+  .otro-field.visible { display: block; }
+
+  /* ── SUBMIT ── */
+  .submit-area {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-submit {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--borgona);
+    color: var(--crema);
+    border: none;
+    padding: 14px 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .btn-submit:hover { background: #4e1f2d; }
+
+  .submit-note {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--gris);
+  }
+
+  /* ── SUCCESS ── */
+  .success {
+    display: none;
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid var(--borgona);
+    background: rgba(102,39,59,0.05);
+    margin-top: 1.5rem;
+  }
+
+  .success.visible { display: block; }
+
+  .success p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--grafito);
+    line-height: 1.65;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    body { padding: 1.5rem 1rem 3rem; }
+    .two-col { grid-template-columns: 1fr; gap: 0; }
+    .chips-grid { gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-wrap">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <span class="intro-eyebrow">Blend Sin Etiquetas</span>
+    <p>Hay mujeres que todavía no conocés. Y conversaciones que todavía no tuviste.</p>
+    <p>Blend Sin Etiquetas nace para crear ese encuentro. Un espacio donde el vino es apenas la excusa para compartir experiencias, descubrir nuevas perspectivas y reconocer todo aquello que muchas veces dejamos en segundo plano.</p>
+    <p>Los encuentros son presenciales, con cupos limitados y acceso por invitación. Si sentís que te gustaría ser parte, dejanos tus datos y te avisaremos cuando abramos una nueva fecha.</p>
+  </div>
+
+  <!-- FORMULARIO -->
+  <form id="blend-form" novalidate>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label" for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label" for="rol">¿A qué te dedicás?</label>
+        <input type="text" id="rol" name="rol" placeholder="Enóloga, sommelier, productora…" required>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="instagram">Instagram <span class="field-optional">(opcional)</span></label>
+        <input type="text" id="instagram" name="instagram" placeholder="@tu_usuario">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- INTERESES -->
+    <span class="intereses-label">¿Qué temas te gustaría conversar?</span>
+    <span class="intereses-hint">Elegí todos los que resuenen. Usamos esto para armar grupos con intereses afines.</span>
+
+    <div class="chips-grid" id="chips-grid"></div>
+
+    <div class="otro-field" id="otro-field">
+      <input type="text" id="otro-texto" placeholder="Contanos qué tema querés explorar…">
+    </div>
+
+    <input type="hidden" id="intereses-hidden" name="intereses">
+
+    <div class="divider"></div>
+
+    <div class="field-group">
+      <label class="field-label" for="mensaje">¿Algo más que quieras contarnos? <span class="field-optional">(opcional)</span></label>
+      <textarea id="mensaje" name="mensaje" placeholder="Podés contarnos en qué momento estás, qué estás construyendo, o cualquier cosa que sientas relevante…"></textarea>
+    </div>
+
+    <div class="submit-area">
+      <button type="submit" class="btn-submit">Quiero recibir la próxima invitación</button>
+      <span class="submit-note">Te escribimos cuando abramos una nueva fecha.</span>
+    </div>
+
+  </form>
+
+  <div class="success" id="success-msg">
+    <p>¡Gracias! Guardamos tus datos y tus intereses. Cuando abramos una nueva fecha de Blend Sin Etiquetas, vas a ser de las primeras en saberlo.</p>
+  </div>
+
+</div>
+
+<!-- MailerLite Universal -->
+<script>
+  (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+  ml('account', '912979');
+</script>
+<!-- End MailerLite Universal -->
+
+<script>
+  // ── CHIPS ──
+  const temas = [
+    "Identidad y autoconocimiento",
+    "Liderazgo femenino",
+    "Visibilidad y comunicación",
+    "Trayectoria y reconocimiento",
+    "Proyectos propios",
+    "Industria del vino",
+    "Autovalidación",
+    "Redes y comunidad",
+    "Creatividad y expresión",
+    "Transición profesional",
+    "Dinero y valor propio",
+    "Otro tema"
+  ];
+
+  const grid = document.getElementById("chips-grid");
+  const selected = new Set();
+
+  temas.forEach(tema => {
+    const chip = document.createElement("label");
+    chip.className = "chip";
+    chip.innerHTML = `
+      <input type="checkbox" value="${tema}">
+      <span class="chip-dot"></span>
+      <span>${tema}</span>
+    `;
+
+    chip.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (selected.has(tema)) {
+        selected.delete(tema);
+        chip.classList.remove("active");
+      } else {
+        selected.add(tema);
+        chip.classList.add("active");
+      }
+      // Mostrar campo "otro" si corresponde
+      const otroField = document.getElementById("otro-field");
+      selected.has("Otro tema")
+        ? otroField.classList.add("visible")
+        : otroField.classList.remove("visible");
+
+      // Actualizar campo oculto
+      document.getElementById("intereses-hidden").value = Array.from(selected).join(", ");
+    });
+
+    grid.appendChild(chip);
+  });
+
+  // ── ENVÍO ──
+  document.getElementById("blend-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nombre   = document.getElementById("nombre").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const rol      = document.getElementById("rol").value.trim();
+    const instagram = document.getElementById("instagram").value.trim();
+    const mensaje  = document.getElementById("mensaje").value.trim();
+    const otroTexto = document.getElementById("otro-texto").value.trim();
+
+    // Armar lista de intereses con texto de "otro" si aplica
+    const interesesFinal = Array.from(selected).map(t =>
+      t === "Otro tema" && otroTexto ? `Otro: ${otroTexto}` : t
+    );
+
+    // Validación mínima
+    if (!nombre || !email || !rol) {
+      alert("Por favor completá nombre, email y a qué te dedicás.");
+      return;
+    }
+
+    // Enviar a MailerLite via API
+    const payload = {
+      email: email,
+      fields: {
+        name: nombre,
+        last_name: "",
+        rol: rol,
+        instagram: instagram,
+        intereses: interesesFinal.join(", "),
+        mensaje: mensaje
+      },
+      groups: ["166736195652421279"]
+    };
+
+    fetch("https://connect.mailerlite.com/api/subscribers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiZmEyNzRhOGFhMTZhZDJiZGU0Y2Y3Zjg4MGRhZDY4YzEyOWZjNWVmMzkwNjQwNTQ0M2U5MTMwODJkODY1OTk1YzEwNDczYjg1ZGRlZjI2NzAiLCJpYXQiOjE3ODE0NTI2ODEuOTU5MDA0LCJuYmYiOjE3ODE0NTI2ODEuOTU5MDA3LCJleHAiOjQ5MzcxMjYyODEuOTU0Nzc5LCJzdWIiOiI5MjI0NDgiLCJzY29wZXMiOltdfQ.cjdXp2_wEQqXC_yfKzMI-IrHDk9QUfR0r82h_eBg7HYOVk6ToCjswFpCNnw8WHyxpwHJkwQwH0375UXC_8itwcxky55TUVWqN6ta2hn6HzQrplmAQhZPt8RpiYZRtrj6pnuO_vxmMmj3wjPmxG3GvqVtAvVuROvCSsEnJFNMh3Dv6I0WhyWFYi12m77tyRauaZ47HS_-exQpEF7Nvtm3TvUqTk4LHypKd7FTAeV5ctryirbhwWBfkKqqB-gVpKeDM-3D72VbVy8Nw-cXlLJS6FQB-0XKwLrJaxEHGO4oMvZ5BjtydQcrRKCoABP8ActXQApaG-Bo1vOgkCF9oPmzO34k3zzdjRFDavkOx2iHIz8WWgzD7Aq8HoB9RDbBTV_7ewRORkmg-41KILHwrBoFqNEgiKXDssTv9L-JoA_yUEsKbiXEwj2FXZm_N8j6ORd62FkkEshggGF8EiZqkAfTWTidw_nnLBMNTMQm-flJnrgo064rLXAGzv2UOQefL9KhWSiicmxwd7M3Tk_NOUluIGI_Vt1DgKO6jDtQ-fMrNGQ9vDMMAuIJ2httKJvB_Z1YneBxG818T15F2PWk1c1cS-CwzYbx0IjnGFuMJ9ljAW0kdz8IG1FRKyE7-s1OPJ2Z3PkPBt47KmO4qmJ1Na56172CEbdTEvK3NqcYm6LJdUs"
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(res => {
+      if (res.ok || res.status === 201 || res.status === 200) {
+        document.getElementById("blend-form").style.display = "none";
+        document.getElementById("success-msg").classList.add("visible");
+      } else {
+        return res.json().then(err => { throw err; });
+      }
+    })
+    .catch(err => {
+      console.error("Error MailerLite:", err);
+      alert("Hubo un problema al enviar. Por favor intentá de nuevo o escribinos directo.");
+    });
+  });
+</script>
+
+</body>
+</html>
