@@ -94,7 +94,7 @@
     <div class="two-col">
       <div class="field-group">
         <label class="field-label" for="f-rol">¿A qué te dedicás?</label>
-        <input type="text" id="f-rol" placeholder="Enóloga, sommelier, productora…" required>
+        <input type="text" id="f-rol" placeholder="Me dedico a..." required>
         <span class="error-msg" id="err-rol">Contanos a qué te dedicás.</span>
       </div>
       <div class="field-group">
@@ -120,7 +120,7 @@
     </div>
 
     <div class="submit-area">
-      <button type="submit" class="btn-submit" id="btn-enviar">Quiero recibir la próxima invitación</button>
+      <button type="submit" class="btn-submit" id="btn-enviar">Quiero recibir información sobre el próximo encuentro</button>
       <span class="submit-note">Te escribimos cuando abramos una nueva fecha.</span>
     </div>
 
@@ -216,9 +216,8 @@
       });
 
       if (res.status === 200 || res.status === 201) {
-        document.getElementById("blend-form").style.display = "none";
-        document.getElementById("success-msg").classList.add("visible");
-      } else {
+  window.location.href = "gracias.html";
+} else {
         const err = await res.json();
         console.error("MailerLite error:", err);
         throw new Error(err.message || "Error desconocido");
