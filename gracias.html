@@ -2,10 +2,157 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>¡Gracias!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gracias — Blend Sin Etiquetas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --crema:#FAF6F0; --grafito:#2C2C2C; --borgona:#66273b;--rosa: #fb6376; --arena:#E8DDD0; --gris:#888; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--grafito);
+    color: var(--crema);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .wrap { max-width: 640px; margin: 0 auto; }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--borgona);
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  .icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--arena);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--rosa);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  .body-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: #555;
+    margin-bottom: 0.85rem;
+  }
+
+  .divider { height: 1px; background: var(--arena); margin: 2rem 0; }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .detail-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grafito);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .detail-val {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #555;
+    line-height: 1.75;
+  }
+
+  .detail-val a { color: var(--borgona); font-weight: 400; }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--borgona);
+    text-decoration: none;
+    margin-top: 0.25rem;
+  }
+  .social-link:hover { color: #4e1f2d; }
+
+  @media (max-width: 520px) {
+    body { padding: 1.5rem 1rem 3rem; }
+    h1 { font-size: 1.65rem; }
+    .details-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-<h1>¡Gracias por registrarte!</h1>
-<p>Tu lugar quedó reservado.</p>
+<div class="wrap">
+
+  <span class="eyebrow">Blend Sin Etiquetas</span>
+
+  <div class="icon-wrap">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="11" cy="11" r="10.25" stroke="#66273b" stroke-width="1.5"/>
+      <polyline points="6.5,11 9.5,14 15.5,8" stroke="#66273b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </div>
+
+  <h1>Ya sos parte del círculo Blend</h1>
+
+  <p class="body-text">Guardamos tus datos y tus intereses. Cuando abramos la nueva fecha de Blend Sin Etiquetas, vas a ser de las primeras en saberlo.</p>
+  <p class="body-text">Mientras tanto, seguimos construyendo el espacio. Gracias por sumar tu energía a esto.</p>
+
+  <div class="divider"></div>
+
+  <div class="details-grid">
+    <div>
+      <span class="detail-label">¿Qué sigue?</span>
+      <p class="detail-val">Te escribimos para confirmar la fecha. La lista de espera es exclusiva: los cupos son pocos y los grupos, pequeños.</p>
+    </div>
+    <div>
+      <span class="detail-label">¿Preguntas?</span>
+      <p class="detail-val">Podés escribirnos directamente a<br><a href="mailto:hola.blendsinetiquetas@gmail.com">hola.blendsinetiquetas@gmail.com</a></p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <span class="detail-label">Seguinos</span>
+  <a href="https://www.instagram.com/blend.sinetiquetas/" class="social-link">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#66273b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>
+    @blend.sinetiquetas
+  </a>
+
+</div>
 </body>
 </html>
