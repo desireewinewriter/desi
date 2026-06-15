@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Tu nombre pesa tanto como tu etiqueta? — Diagnóstico · Desi Romano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ── TOKENS ── */
+  :root {
+    --borgona:   #66273b;
+    --borgona-d: #4e1f2d;
+    --rosa:      #fb6376;
+    --grafito:   #2C2C2C;
+    --crema:     #FAF6F0;
+    --arena:     #F0E8E0;
+    --arena-d:   #ddd0c4;
+    --terracota: #b85c38;
+    --blanco:    #ffffff;
+    --gris:      #888;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--crema);
+    color: var(--grafito);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .no-print { display: none !important; }
+    .page-break { page-break-before: always; }
+    body { font-size: 13px; }
+    .cover { min-height: 100vh; }
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .serif { font-family: 'Cormorant Garamond', serif; }
+
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.1; }
+
+  /* ── LAYOUT ── */
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ────────────────────────────
+     COVER
+  ──────────────────────────── */
+  .cover {
+    background: var(--borgona);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3.5rem 3rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(250,246,240,0.1);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; left: -60px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(250,246,240,0.07);
+    pointer-events: none;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .cover-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(250,246,240,0.55);
+  }
+
+  .cover-tag {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rosa);
+    border: 1px solid var(--rosa);
+    padding: 0.35rem 0.85rem;
+  }
+
+  .cover-center { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 4rem 0 3rem; }
+
+  .cover-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rosa);
+    margin-bottom: 1.5rem;
+  }
+
+  .cover-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--crema);
+    margin-bottom: 2rem;
+  }
+
+  .cover-h1 em {
+    font-style: italic;
+    color: var(--rosa);
+  }
+
+  .cover-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.7);
+    max-width: 480px;
+    line-height: 1.75;
+    border-left: 2px solid var(--rosa);
+    padding-left: 1.5rem;
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .cover-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(250,246,240,0.6);
+  }
+
+  .cover-author strong {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--crema);
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-vino {
+    font-size: 4rem;
+    opacity: 0.15;
+    user-select: none;
+  }
+
+  /* ────────────────────────────
+     SECTION GENERAL
+  ──────────────────────────── */
+  .section {
+    padding: 4rem 3rem;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .section-dark {
+    background: var(--grafito);
+    color: var(--crema);
+    max-width: 100%;
+    padding: 4rem 3rem;
+  }
+
+  .section-dark .wrap { color: var(--crema); }
+
+  .section-arena {
+    background: var(--arena);
+    max-width: 100%;
+    padding: 4rem 3rem;
+  }
+
+  .section-borgona {
+    background: var(--borgona);
+    color: var(--crema);
+    max-width: 100%;
+    padding: 4rem 3rem;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--borgona);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .label-rosa { color: var(--rosa); }
+  .label-arena { color: var(--arena-d); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--borgona); }
+  .section-title-light em { color: var(--rosa); }
+  .section-title-light { color: var(--crema); }
+
+  .lead {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: #555;
+  }
+
+  .lead-light {
+    color: rgba(250,246,240,0.75);
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--borgona);
+    margin: 2rem 0;
+  }
+
+  .divider-rosa { background: var(--rosa); }
+
+  /* ────────────────────────────
+     BIENVENIDA
+  ──────────────────────────── */
+  .welcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .welcome-aside {
+    background: var(--borgona);
+    padding: 2rem 1.5rem;
+    color: var(--crema);
+  }
+
+  .welcome-aside .serif {
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .welcome-aside p {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(250,246,240,0.7);
+  }
+
+  .welcome-content p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: #555;
+    margin-bottom: 1.25rem;
+  }
+
+  .welcome-content p:last-child { margin-bottom: 0; }
+
+  .welcome-content strong { color: var(--borgona); font-weight: 500; }
+
+  .quote-block {
+    border-left: 3px solid var(--borgona);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--grafito);
+    line-height: 1.6;
+  }
+
+  .quote-block-rosa {
+    border-left-color: var(--rosa);
+    color: var(--crema);
+  }
+
+  /* ────────────────────────────
+     INSTRUCCIONES
+  ──────────────────────────── */
+  .instrucciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .inst-card {
+    background: rgba(250,246,240,0.06);
+    border: 1px solid rgba(250,246,240,0.12);
+    padding: 1.5rem;
+  }
+
+  .inst-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--rosa);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .inst-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(250,246,240,0.5);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .inst-desc {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.8);
+    line-height: 1.65;
+  }
+
+  .escala {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .escala-item {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 1rem 0.75rem;
+    border: 1px solid rgba(250,246,240,0.15);
+  }
+
+  .escala-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: var(--rosa);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .escala-txt {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.55);
+    line-height: 1.4;
+  }
+
+  /* ────────────────────────────
+     BLOQUES DE DIAGNÓSTICO
+  ──────────────────────────── */
+  .bloque-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--arena-d);
+  }
+
+  .bloque-header-dark {
+    border-bottom-color: rgba(250,246,240,0.12);
+  }
+
+  .bloque-letra {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    color: var(--borgona);
+    line-height: 1;
+    opacity: 0.25;
+    flex-shrink: 0;
+  }
+
+  .bloque-letra-light {
+    color: var(--crema);
+  }
+
+  .bloque-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .bloque-pregunta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--borgona);
+    margin-top: 0.25rem;
+  }
+
+  .bloque-pregunta-light { color: var(--rosa); }
+
+  /* Afirmaciones */
+  .afirmaciones { display: flex; flex-direction: column; gap: 1rem; }
+
+  .afirmacion {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--arena-d);
+    background: var(--blanco);
+    transition: border-color 0.2s;
+  }
+
+  .afirmacion:hover { border-color: var(--borgona); }
+
+  .afirmacion-dark {
+    border-color: rgba(250,246,240,0.1);
+    background: rgba(250,246,240,0.04);
+  }
+
+  .afirmacion-dark:hover { border-color: rgba(251,99,118,0.4); }
+
+  .afirmacion-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--borgona);
+    color: var(--crema);
+    font-size: 0.7rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .afirmacion-badge-dark { background: var(--terracota); }
+
+  .afirmacion-texto { font-size: 0.9rem; font-weight: 300; line-height: 1.55; }
+
+  .afirmacion-texto strong { font-weight: 500; color: var(--borgona); }
+
+  .afirmacion-texto-dark { color: rgba(250,246,240,0.85); }
+  .afirmacion-texto-dark strong { color: var(--rosa); }
+
+  .puntaje-box {
+    width: 44px;
+    height: 36px;
+    border: 1px solid var(--arena-d);
+    background: var(--crema);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--gris);
+  }
+
+  .puntaje-box-dark {
+    border-color: rgba(250,246,240,0.2);
+    background: rgba(250,246,240,0.06);
+    color: rgba(250,246,240,0.4);
+  }
+
+  .subtotal-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--arena);
+    border-left: 3px solid var(--borgona);
+  }
+
+  .subtotal-box-dark {
+    background: rgba(250,246,240,0.07);
+    border-left-color: var(--rosa);
+  }
+
+  .subtotal-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--borgona);
+  }
+
+  .subtotal-label-dark { color: var(--rosa); }
+
+  .subtotal-field {
+    width: 80px;
+    height: 36px;
+    border: 1px solid var(--borgona);
+    background: var(--blanco);
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+  }
+
+  .subtotal-field-dark {
+    border-color: var(--rosa);
+    background: rgba(250,246,240,0.08);
+    color: var(--crema);
+  }
+
+  /* Sub-sección dentro del bloque */
+  .sub-header {
+    margin: 2.5rem 0 1.25rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .sub-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .sub-pregunta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--borgona);
+  }
+
+  .sub-pregunta-light { color: var(--rosa); }
+
+  /* ────────────────────────────
+     RESULTADOS
+  ──────────────────────────── */
+  .total-banner {
+    background: var(--borgona);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .total-banner-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(250,246,240,0.7);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .total-banner-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--crema);
+  }
+
+  .total-input-wrap { display: flex; align-items: center; gap: 1rem; }
+
+  .total-input {
+    width: 90px;
+    height: 52px;
+    border: 2px solid var(--rosa);
+    background: transparent;
+    color: var(--crema);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .total-pts {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,246,240,0.5);
+  }
+
+  /* Resultado cards */
+  .resultado-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .resultado-card {
+    border: 1px solid var(--arena-d);
+    overflow: hidden;
+  }
+
+  .resultado-card-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--arena);
+  }
+
+  .resultado-pts {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--borgona);
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid var(--borgona);
+    padding: 0.3rem 0.75rem;
+  }
+
+  .resultado-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  .resultado-emoji { font-size: 1.5rem; }
+
+  .resultado-body { padding: 1.5rem; }
+
+  .resultado-body p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+
+  .resultado-body p:last-child { margin-bottom: 0; }
+
+  .resultado-body strong { color: var(--borgona); font-weight: 500; }
+
+  .resultado-insight {
+    background: var(--borgona);
+    color: var(--crema);
+    padding: 1rem 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  /* ────────────────────────────
+     REFLEXIÓN FINAL
+  ──────────────────────────── */
+  .reflexion-preguntas {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .reflexion-item { }
+
+  .reflexion-q {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--crema);
+    margin-bottom: 0.75rem;
+  }
+
+  .reflexion-field {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(250,246,240,0.25);
+    background: transparent;
+    padding: 0.6rem 0;
+    color: var(--crema);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    resize: none;
+  }
+
+  .reflexion-field::placeholder { color: rgba(250,246,240,0.25); }
+
+  /* ────────────────────────────
+     CTA FINAL
+  ──────────────────────────── */
+  .cta-section {
+    background: var(--borgona);
+    padding: 5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(250,246,240,0.07);
+  }
+
+  .cta-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rosa);
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    color: var(--crema);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-h2 em { font-style: italic; color: var(--rosa); }
+
+  .cta-body {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.72);
+    line-height: 1.85;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .cta-what {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 420px;
+    margin: 0 auto 2.5rem;
+    text-align: left;
+  }
+
+  .cta-what-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.8);
+    line-height: 1.5;
+  }
+
+  .cta-what-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rosa);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--rosa);
+    color: var(--grafito);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.15rem 3rem;
+    transition: background 0.25s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-btn:hover { background: #e8556a; }
+
+  .cta-note {
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.4);
+    letter-spacing: 0.06em;
+  }
+
+  .cta-firma {
+    margin-top: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: rgba(250,246,240,0.5);
+  }
+
+  .cta-firma strong {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(250,246,240,0.35);
+    margin-top: 0.35rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ────────────────────────────
+     FOOTER
+  ──────────────────────────── */
+  .footer {
+    background: var(--grafito);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--crema);
+  }
+
+  .footer-info {
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: rgba(250,246,240,0.4);
+    letter-spacing: 0.06em;
+  }
+
+  /* ────────────────────────────
+     DOWNLOAD BUTTON (screen only)
+  ──────────────────────────── */
+  .print-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--borgona);
+    color: var(--crema);
+    border: none;
+    padding: 0.9rem 1.75rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    z-index: 999;
+    transition: background 0.2s;
+    box-shadow: 0 4px 20px rgba(44,44,44,0.25);
+  }
+
+  .print-btn:hover { background: var(--borgona-d); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .cover { padding: 2.5rem 1.75rem 2.5rem; }
+    .section, .section-dark .wrap, .section-arena .wrap, .section-borgona .wrap { padding: 3rem 1.5rem; }
+    .welcome-grid { grid-template-columns: 1fr; }
+    .instrucciones-grid { grid-template-columns: 1fr; }
+    .afirmacion { grid-template-columns: auto 1fr; }
+    .puntaje-box { display: none; }
+    .bloque-letra { font-size: 3rem; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ PRINT BUTTON ══ -->
+<button class="print-btn no-print" onclick="window.print()">⬇ Guardar como PDF</button>
+
+<!-- ══════════════════════════════════
+     TAPA
+══════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-top">
+    <span class="cover-brand">Desi Romano · Estrategia&Narrativa</span>
+    <span class="cover-tag">Diagnóstico gratuito</span>
+  </div>
+
+  <div class="cover-center">
+    <span class="cover-eyebrow">Para mujeres del mundo del vino</span>
+    <h1 class="cover-h1">¿Tu nombre pesa<br>tanto como<br><em>tu etiqueta?</em></h1>
+    <p class="cover-sub">Una herramienta para revisar tu comunicación, reconocer dónde estás parada hoy y dar el próximo paso con dirección y presencia real.</p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-author">
+      <strong>Desi Romano</strong>
+      Estrategia · Narrativa · Mujeres del Vino
+    </div>
+    <span class="cover-vino">🍷</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BIENVENIDA
+══════════════════════════════════ -->
+<div style="padding: 4rem 3rem; max-width: 780px; margin: 0 auto;">
+  <span class="label">Bienvenida</span>
+  <h2 class="section-title">Si estás acá, es porque sentís que hay una distancia entre lo que <em>sabés</em> y lo que el mundo escucha de vos.</h2>
+  <div class="divider"></div>
+
+  <div class="welcome-grid">
+    <div class="welcome-aside">
+      <span class="serif">¿Alguna vez sentiste que tu etiqueta tiene más presencia que tu propia historia?</span>
+      <p>No se trata de exponerte por exponerse. Se trata de dejar de ser invisible detrás de tu propio trabajo.</p>
+    </div>
+    <div class="welcome-content">
+      <p>Te refugiás en los datos técnicos del vino porque es tu zona segura. Pero en ese proceso, tu esencia queda afuera. Tu criterio —eso que te hace única— apenas se percibe.</p>
+      <p>El vino cambió. Las mujeres cambiamos. Sin embargo, nos seguimos comunicando de la misma manera: desde la técnica, el conocimiento y la tradición. Eso es valioso, pero hoy <strong>es insuficiente</strong>.</p>
+      <p>Porque la autoridad real se construye con una identidad que se vea. Con un nombre que pese tanto como la etiqueta que sostenés.</p>
+      <div class="quote-block">Permanecer invisible no es un acto de humildad. Hoy, se lee como vulnerabilidad comercial.</div>
+      <p>Creé este diagnóstico no para que "mejores" tu comunicación con frases hechas, sino para que puedas ver con claridad qué lugar estás ocupando hoy. Es el primer paso para salir de atrás de la etiqueta.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     INSTRUCCIONES
+══════════════════════════════════ -->
+<div class="section-dark">
+  <div class="wrap">
+    <span class="label label-rosa">Instrucciones</span>
+    <h2 class="section-title section-title-light">La <em>cata de marca.</em><br>Cómo funciona este diagnóstico</h2>
+    <p class="lead lead-light" style="margin-top:1rem;">Descorchá ese vino que estás guardando. Lápiz, papel y el alma en juego. Respondé basándote en lo que hacés hoy, no en lo que te gustaría hacer mañana.</p>
+
+    <div class="instrucciones-grid">
+      <div class="inst-card">
+        <div class="inst-num">5</div>
+        <span class="inst-label">Bloques de análisis</span>
+        <p class="inst-desc">Terroir · Varietal · Suelo · Barrica · Bodega. Cada uno evalúa un aspecto de tu identidad y comunicación.</p>
+      </div>
+      <div class="inst-card">
+        <div class="inst-num">10</div>
+        <span class="inst-label">Afirmaciones por bloque</span>
+        <p class="inst-desc">Puntuá cada una del 1 al 5 según cuánto te representa hoy. Hay cinco niveles de avance, sin respuestas correctas o incorrectas.</p>
+      </div>
+    </div>
+
+    <div class="escala">
+      <div class="escala-item">
+        <span class="escala-num">1</span>
+        <span class="escala-txt">Vino<br>picado</span>
+      </div>
+      <div class="escala-item">
+        <span class="escala-num">2</span>
+        <span class="escala-txt">Falta<br>maduración</span>
+      </div>
+      <div class="escala-item">
+        <span class="escala-num">3</span>
+        <span class="escala-txt">En proceso<br>de crianza</span>
+      </div>
+      <div class="escala-item">
+        <span class="escala-num">4</span>
+        <span class="escala-txt">Buen cuerpo<br>y estructura</span>
+      </div>
+      <div class="escala-item">
+        <span class="escala-num">5</span>
+        <span class="escala-txt">Denominación<br>de Origen</span>
+      </div>
+    </div>
+
+    <div class="quote-block quote-block-rosa" style="margin-top:2.5rem;">
+      Este resultado no define tu valor como profesional. Revela el nivel de estructura que hoy sostiene —o limita— tu identidad y posicionamiento.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BLOQUE 1 · TERROIR
+══════════════════════════════════ -->
+<div class="page-break" style="padding: 4rem 3rem; max-width: 780px; margin: 0 auto;">
+  <div class="bloque-header">
+    <div class="bloque-letra">T</div>
+    <div>
+      <div class="label">Bloque 01</div>
+      <div class="bloque-title">Terroir</div>
+      <div class="bloque-pregunta">Tu comunicación y tu escritura</div>
+    </div>
+  </div>
+
+  <div class="sub-header">
+    <span class="sub-title">Tu comunicación</span>
+    <span class="sub-pregunta">¿Cómo transmitís tu conocimiento?</span>
+  </div>
+
+  <div class="afirmaciones">
+    <div class="afirmacion">
+      <div class="afirmacion-badge">A</div>
+      <div class="afirmacion-texto"><strong>Enfoque en proceso:</strong> Hablás principalmente de fermentación, barrica y técnica, dejando que la calidad del vino explique tu propuesta por sí sola.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">B</div>
+      <div class="afirmacion-texto"><strong>Precisión técnica:</strong> Explicás cómo nace cada vino con rigor, pero rara vez incorporás tu mirada personal al relato.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">C</div>
+      <div class="afirmacion-texto"><strong>Dificultad de integración:</strong> Explicás el terroir y la técnica con precisión, pero te cuesta integrar tu criterio profesional con una narrativa propia.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">D</div>
+      <div class="afirmacion-texto"><strong>Incorporación de interpretación:</strong> Además de describir procesos, empezás a sumar tu enfoque personal a lo que comunicás.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">E</div>
+      <div class="afirmacion-texto"><strong>Identidad guía:</strong> Tu comunicación refleja una identidad clara; el proceso está presente, pero es tu mirada la que guía el relato.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+  </div>
+
+  <div class="sub-header" style="margin-top:2.5rem;">
+    <span class="sub-title">Tu escritura</span>
+    <span class="sub-pregunta">¿Qué tan sólida es tu narrativa?</span>
+  </div>
+
+  <div class="afirmaciones">
+    <div class="afirmacion">
+      <div class="afirmacion-badge">A</div>
+      <div class="afirmacion-texto"><strong>Reinicio constante:</strong> Sentís que empezás de cero cada vez que escribís una bio, un post o una propuesta. Tu discurso cambia según el contexto.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">B</div>
+      <div class="afirmacion-texto"><strong>Falta de coherencia narrativa:</strong> Tus textos contienen información valiosa, pero no mantienen una línea reconocible entre sí.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">C</div>
+      <div class="afirmacion-texto"><strong>Estructura en proceso:</strong> Existe cierta coherencia, pero todavía no tenés una base clara que sostenga tu identidad profesional en cada pieza.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">D</div>
+      <div class="afirmacion-texto"><strong>Hilo conductor:</strong> Tu comunicación tiene un hilo reconocible y tus textos reflejan una identidad consistente.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">E</div>
+      <div class="afirmacion-texto"><strong>Dirección estratégica:</strong> Tu escritura posee coherencia interna y dirección. Cada pieza fortalece tu posicionamiento y reputación en el sector.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+  </div>
+
+  <div class="subtotal-box">
+    <span class="subtotal-label">Subtotal Terroir</span>
+    <input class="subtotal-field" type="text" placeholder="   /50">
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BLOQUE 2 · VARIETAL
+══════════════════════════════════ -->
+<div class="section-arena">
+  <div class="wrap">
+    <div class="bloque-header" style="border-bottom-color: var(--arena-d);">
+      <div class="bloque-letra" style="opacity:0.18; color: var(--borgona);">V</div>
+      <div>
+        <div class="label">Bloque 02</div>
+        <div class="bloque-title">Varietal</div>
+        <div class="bloque-pregunta">Tu punto de dolor y tu identidad visual</div>
+      </div>
+    </div>
+
+    <div class="sub-header">
+      <span class="sub-title">Punto de dolor</span>
+      <span class="sub-pregunta">¿Qué problema resolvés?</span>
+    </div>
+
+    <div class="afirmaciones">
+      <div class="afirmacion">
+        <div class="afirmacion-badge">A</div>
+        <div class="afirmacion-texto"><strong>Invisibilidad del conflicto:</strong> Comunicás lo que hacés, pero no tenés del todo claro cuál es el conflicto específico que transformás.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">B</div>
+        <div class="afirmacion-texto"><strong>Valor sin nombre:</strong> Sabés que aportás valor, aunque te cuesta nombrar con precisión el problema que resolvés en el sector.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">C</div>
+        <div class="afirmacion-texto"><strong>Estructura en proceso:</strong> Identificás algunos puntos de dolor de tu clienta ideal, pero todavía no los estructuraste como eje de tu posicionamiento.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">D</div>
+        <div class="afirmacion-texto"><strong>Comunicación intencional:</strong> Tenés claridad sobre el problema principal que transformás y empezás a comunicarlo con intención.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">E</div>
+        <div class="afirmacion-texto"><strong>Autoridad desde el conflicto:</strong> Tu marca nace de un conflicto definido; tu discurso parte de ese punto de dolor y construye autoridad desde allí.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+    </div>
+
+    <div class="sub-header" style="margin-top:2.5rem;">
+      <span class="sub-title">Identidad visual</span>
+      <span class="sub-pregunta">¿Cómo te ven?</span>
+    </div>
+
+    <div class="afirmaciones">
+      <div class="afirmacion">
+        <div class="afirmacion-badge">A</div>
+        <div class="afirmacion-texto"><strong>Gusto personal:</strong> Elegiste colores e imágenes por gusto propio más que por una coherencia estratégica con tu posicionamiento.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">B</div>
+        <div class="afirmacion-texto"><strong>Estética sin estrategia:</strong> Tu estética se ve prolija o agradable, pero no necesariamente comunica un posicionamiento claro.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">C</div>
+        <div class="afirmacion-texto"><strong>Alineación inicial:</strong> Tu identidad visual empieza a acompañar tu mensaje, aunque aún podría alinearse mejor con tu liderazgo.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">D</div>
+        <div class="afirmacion-texto"><strong>Anticipación de experiencia:</strong> Lo visual ya anticipa el tipo de experiencia profesional que ofrecés.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+      <div class="afirmacion">
+        <div class="afirmacion-badge">E</div>
+        <div class="afirmacion-texto"><strong>Coherencia total:</strong> Tu imagen tiene coherencia interna y dirección estratégica; cada elemento fortalece tu reputación en el sector.</div>
+        <div class="puntaje-box">___</div>
+      </div>
+    </div>
+
+    <div class="subtotal-box">
+      <span class="subtotal-label">Subtotal Varietal</span>
+      <input class="subtotal-field" type="text" placeholder="   /50">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BLOQUE 3 · SUELO
+══════════════════════════════════ -->
+<div class="page-break section-dark">
+  <div class="wrap">
+    <div class="bloque-header bloque-header-dark">
+      <div class="bloque-letra bloque-letra-light">S</div>
+      <div>
+        <span class="label label-rosa">Bloque 03</span>
+        <div class="bloque-title section-title-light">Suelo</div>
+        <div class="bloque-pregunta bloque-pregunta-light">Investigación y lenguaje de comunicación</div>
+      </div>
+    </div>
+
+    <div class="sub-header">
+      <span class="sub-title" style="color:var(--crema);">Investigación</span>
+      <span class="sub-pregunta bloque-pregunta-light">¿Cómo nutrís tu mensaje?</span>
+    </div>
+
+    <div class="afirmaciones">
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">A</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Inercia del sector:</strong> Comunicás como históricamente se ha hecho en el vino, sin cuestionar el formato.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">B</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Réplica:</strong> Observás lo que hacen otras profesionales y muchas veces lo replicás sin adaptarlo a tu propia identidad.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">C</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Análisis de referencias:</strong> Analizás referencias del sector y empezás a diferenciar lo que se alinea con vos de lo que no.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">D</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Ajuste con criterio:</strong> Investigás cómo evolucionan las mujeres del vino en su comunicación y ajustás tu mensaje con criterio propio.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">E</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Mirada estratégica:</strong> Observás el mercado con mirada propia y tomás decisiones comunicacionales desde tu enfoque, evitando la repetición.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+    </div>
+
+    <div class="sub-header" style="margin-top:2.5rem;">
+      <span class="sub-title" style="color:var(--crema);">Lenguaje y objetivo</span>
+      <span class="sub-pregunta bloque-pregunta-light">¿Para qué comunicás?</span>
+    </div>
+
+    <div class="afirmaciones">
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">A</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Informativo:</strong> Comunicás principalmente para informar, sin definir si buscás educar o posicionarte.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">B</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Falta de claridad:</strong> A veces educás y otras describís, pero no siempre tenés claridad sobre el objetivo de cada pieza de contenido.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">C</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Distinción inicial:</strong> Empezás a distinguir cuándo es momento de informar, cuándo de educar y cuándo de posicionarte.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">D</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Claridad de objetivo:</strong> Tenés claridad sobre el objetivo comunicacional de cada mensaje que publicás.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">E</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Alineación estratégica:</strong> Tu lenguaje está alineado con tu objetivo estratégico; utilizás el discurso específicamente para posicionarte.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+    </div>
+
+    <div class="subtotal-box subtotal-box-dark">
+      <span class="subtotal-label subtotal-label-dark">Subtotal Suelo</span>
+      <input class="subtotal-field subtotal-field-dark" type="text" placeholder="   /50">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BLOQUE 4 · BARRICA
+══════════════════════════════════ -->
+<div style="padding: 4rem 3rem; max-width: 780px; margin: 0 auto;">
+  <div class="bloque-header">
+    <div class="bloque-letra">B</div>
+    <div>
+      <div class="label">Bloque 04</div>
+      <div class="bloque-title">Barrica</div>
+      <div class="bloque-pregunta">Tu presencia y criterio percibido</div>
+    </div>
+  </div>
+
+  <div class="sub-header">
+    <span class="sub-title">Presencia</span>
+    <span class="sub-pregunta">¿Con qué intención comunicás?</span>
+  </div>
+
+  <div class="afirmaciones">
+    <div class="afirmacion">
+      <div class="afirmacion-badge">A</div>
+      <div class="afirmacion-texto"><strong>Publicación por presencia:</strong> Publicás para mantenerte activa, pero sin una intención estratégica clara detrás de cada pieza.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">B</div>
+      <div class="afirmacion-texto"><strong>Seguís tendencias:</strong> Observás lo que hacen otras profesionales o el viral del momento y lo copiás sin adaptarlo a tu identidad.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">C</div>
+      <div class="afirmacion-texto"><strong>Intención intermitente:</strong> Algunas de tus piezas tienen una intención definida, mientras que otras responden al impulso del momento.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">D</div>
+      <div class="afirmacion-texto"><strong>Propósito dominante:</strong> La mayoría de tus publicaciones tienen un propósito claro y responden a una dirección estratégica.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">E</div>
+      <div class="afirmacion-texto"><strong>Intención total:</strong> Cada mensaje que comunicás tiene una intención específica. Como en la elaboración del vino, nada es casual.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+  </div>
+
+  <div class="sub-header" style="margin-top:2.5rem;">
+    <span class="sub-title">Criterio percibido</span>
+    <span class="sub-pregunta">¿Cómo te buscan?</span>
+  </div>
+
+  <div class="afirmaciones">
+    <div class="afirmacion">
+      <div class="afirmacion-badge">A</div>
+      <div class="afirmacion-texto"><strong>Búsqueda por disponibilidad:</strong> Te buscan principalmente por cercanía o disponibilidad, más que por una mirada profesional definida.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">B</div>
+      <div class="afirmacion-texto"><strong>Ligada al producto:</strong> Después de un proyecto, tu nombre queda ligado al producto, pero no necesariamente a un criterio propio.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">C</div>
+      <div class="afirmacion-texto"><strong>Claridad con improvisación:</strong> Tu discurso tiene momentos de claridad, aunque todavía improvisás según el contexto.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">D</div>
+      <div class="afirmacion-texto"><strong>Diferenciación en marcha:</strong> Tu clienta ya puede describir qué te hace diferente, aunque seguís fortaleciendo tu estructura narrativa.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+    <div class="afirmacion">
+      <div class="afirmacion-badge">E</div>
+      <div class="afirmacion-texto"><strong>Autoridad de nombre:</strong> Te buscan por tu mirada. Tu nombre es recordado más allá de la etiqueta y sostenés tu valor con seguridad.</div>
+      <div class="puntaje-box">___</div>
+    </div>
+  </div>
+
+  <div class="subtotal-box">
+    <span class="subtotal-label">Subtotal Barrica</span>
+    <input class="subtotal-field" type="text" placeholder="   /50">
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BLOQUE 5 · BODEGA
+══════════════════════════════════ -->
+<div class="section-borgona">
+  <div class="wrap">
+    <div class="bloque-header bloque-header-dark">
+      <div class="bloque-letra bloque-letra-light">Bo</div>
+      <div>
+        <span class="label label-rosa">Bloque 05 · Final</span>
+        <div class="bloque-title section-title-light">Bodega</div>
+        <div class="bloque-pregunta bloque-pregunta-light">Tu posicionamiento real</div>
+      </div>
+    </div>
+
+    <p class="lead lead-light" style="margin-bottom:2rem;">La Bodega es la síntesis de todo lo anterior. Determina si hoy dependés de factores externos o si tu nombre ya tiene autonomía profesional.</p>
+
+    <div class="afirmaciones">
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">A</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Dependencia externa:</strong> Dependés en gran parte del boca en boca para generar nuevas oportunidades.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">B</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Consolidación de liderazgo:</strong> Tu comunicación refleja mucha experiencia técnica, pero todavía estás en proceso de consolidar tu liderazgo.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">C</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Búsqueda de profundidad:</strong> Sentís que tu mensaje se acerca a tu identidad actual, pero puede ganar más profundidad.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">D</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Dirección clara:</strong> Tenés claridad sobre a quién querés dirigirte y empezaste a comunicar con una dirección firme.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+      <div class="afirmacion afirmacion-dark">
+        <div class="afirmacion-badge afirmacion-badge-dark">E</div>
+        <div class="afirmacion-texto afirmacion-texto-dark"><strong>Autonomía y elección:</strong> Tu discurso te permite elegir las oportunidades que deseás. Tu posicionamiento refleja liderazgo y autoridad profesional.</div>
+        <div class="puntaje-box puntaje-box-dark">___</div>
+      </div>
+    </div>
+
+    <div class="subtotal-box subtotal-box-dark">
+      <span class="subtotal-label subtotal-label-dark">Subtotal Bodega</span>
+      <input class="subtotal-field subtotal-field-dark" type="text" placeholder="   /50">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     RESULTADOS
+══════════════════════════════════ -->
+<div class="page-break" style="padding: 4rem 3rem; max-width: 780px; margin: 0 auto;">
+  <span class="label">Tus resultados</span>
+  <h2 class="section-title">La identidad se siente.<br>El posicionamiento <em>se mide.</em></h2>
+  <div class="divider"></div>
+  <p class="lead" style="margin-bottom:2rem;">Sumá los puntos obtenidos en los cinco bloques. Este número no define tu valor como profesional, sino el nivel de estructura que hoy sostiene tu voz en la industria.</p>
+
+  <div class="total-banner">
+    <div>
+      <span class="total-banner-label">Tu puntaje total</span>
+      <span class="total-banner-title">Terroir + Varietal + Suelo + Barrica + Bodega</span>
+    </div>
+    <div class="total-input-wrap">
+      <input class="total-input" type="text" placeholder="__">
+      <span class="total-pts">/ 250 pts</span>
+    </div>
+  </div>
+
+  <!-- RESULTADO 1 -->
+  <div class="resultado-cards">
+    <div class="resultado-card">
+      <div class="resultado-card-header">
+        <div class="resultado-pts">Menos de 80 pts</div>
+        <div class="resultado-name">Mosto en Potencia 🍇</div>
+        <div class="resultado-emoji"></div>
+      </div>
+      <div class="resultado-body">
+        <p><strong>Qué significa:</strong> Tu identidad y posicionamiento están en formación. Tenés experiencia y conocimiento, pero todavía dependés del contexto y del producto. Tu mirada profesional no se percibe plenamente; tu narrativa necesita estructura.</p>
+        <p>Improvisás posteos, respondés mensajes hasta tarde y al final ni sabés qué fue lo que funcionó. Dependés del boca en boca, de tu presencia física o del proyecto de la bodega.</p>
+        <p><strong>La realidad:</strong> Tu trabajo y tu técnica tienen todo el potencial, pero vivir sin estructura ni posicionamiento genera un desgaste que no te permite crecer.</p>
+        <div class="resultado-insight">Tu posicionamiento está en fase inicial, como un mosto recién exprimido. Con todo el potencial, pero necesita fermentación y cuidado para revelar su carácter.</div>
+      </div>
+    </div>
+
+    <!-- RESULTADO 2 -->
+    <div class="resultado-card">
+      <div class="resultado-card-header">
+        <div class="resultado-pts">80 a 180 pts</div>
+        <div class="resultado-name">Vino en Crianza 🍾</div>
+      </div>
+      <div class="resultado-body">
+        <p><strong>Qué significa:</strong> Tu identidad comienza a consolidarse y tu nombre gana peso. Tu comunicación refleja mucha experiencia técnica, pero todavía estás en proceso de consolidar tu liderazgo. Tu carácter profesional está madurando.</p>
+        <p>Tenés un negocio que funciona, pero la llegada de clientes aún depende en gran medida de tu esfuerzo personal. Tu discurso tiene momentos de claridad, pero todavía improvisás según el contexto. Sos referente para quienes ya te conocen, pero fuera de ese círculo tu nombre no tiene el peso suficiente para que te busquen solo por ser vos.</p>
+        <div class="resultado-insight">Es momento de soltar el peso de lo que te incomoda y decidirte a crecer con una identidad clara que no pida permiso para comunicar.</div>
+      </div>
+    </div>
+
+    <!-- RESULTADO 3 -->
+    <div class="resultado-card">
+      <div class="resultado-card-header">
+        <div class="resultado-pts">Más de 180 pts</div>
+        <div class="resultado-name">Denominación de Origen ⭐</div>
+      </div>
+      <div class="resultado-body">
+        <p><strong>Qué significa:</strong> Tu identidad y posicionamiento son claros, visibles y estratégicos. Cada pieza de tu comunicación refleja tu criterio, tu mirada y tu autoridad. Tu narrativa es coherente; tu nombre pesa más que la etiqueta.</p>
+        <p>Sos elegida por tu valor real y por tu mirada única sobre el mercado. Ya no hablás solo desde la técnica; tu discurso tiene dirección y sos reconocida por tu interpretación personal del mundo del vino.</p>
+        <p><strong>Tu próximo paso:</strong> Automatizar esa autoridad. Crear canales de comunicación sólidos que reflejen tu identidad de manera constante, sin que tengas que estar presente en cada paso.</p>
+        <div class="resultado-insight">Tu nombre ya pesa más que cualquier etiqueta. El desafío es construir el sistema que trabaje por vos mientras vos seguís creciendo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     REFLEXIÓN FINAL
+══════════════════════════════════ -->
+<div class="section-dark">
+  <div class="wrap">
+    <span class="label label-rosa">Antes de cerrar</span>
+    <h2 class="section-title section-title-light">Firmá tu <em>etiqueta.</em></h2>
+    <p class="lead lead-light" style="margin-bottom:2rem;">No necesitás grandes textos técnicos aún. Solo respondé desde tu mirada más honesta:</p>
+
+    <div class="reflexion-preguntas">
+      <div class="reflexion-item">
+        <div class="reflexion-q">¿Qué descubriste de vos en este proceso que no habías nombrado antes?</div>
+        <textarea class="reflexion-field" rows="3" placeholder="Escribí acá..."></textarea>
+      </div>
+      <div class="reflexion-item">
+        <div class="reflexion-q">Cuando alguien piensa en vos, ¿qué querés que sienta antes de que hable tu técnica?</div>
+        <textarea class="reflexion-field" rows="3" placeholder="Escribí acá..."></textarea>
+      </div>
+      <div class="reflexion-item">
+        <div class="reflexion-q">¿Qué aspecto de tu historia del vino aún no contaste y sentís que sería importante que el mundo conociera?</div>
+        <textarea class="reflexion-field" rows="3" placeholder="Escribí acá..."></textarea>
+      </div>
+    </div>
+
+    <div class="quote-block quote-block-rosa" style="margin-top:3rem;">
+      Crear tu marca no es llenar casilleros ni seguir fórmulas ajenas. Es recorrer un camino con huella propia, donde cada pregunta te acerca a tu esencia y cada respuesta refleja quién sos.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     CTA FINAL
+══════════════════════════════════ -->
+<div class="cta-section">
+  <p class="cta-eyebrow">El próximo paso</p>
+  <h2 class="cta-h2">Lo que descubriste<br>es solo el <em>comienzo.</em></h2>
+  <p class="cta-body">Ahora que sabés dónde estás parada, es momento de darle estructura a lo que ya sos. No tenés que recorrer ese camino sola ni de ensayo y error.</p>
+
+  <div class="cta-what">
+    <div class="cta-what-item">
+      <div class="cta-what-dot"></div>
+      <span>Revisamos juntas tu diagnóstico y qué está bloqueando tu posicionamiento</span>
+    </div>
+    <div class="cta-what-item">
+      <div class="cta-what-dot"></div>
+      <span>Identificamos el siguiente paso concreto para que tu nombre pese tanto como tu trabajo</span>
+    </div>
+    <div class="cta-what-item">
+      <div class="cta-what-dot"></div>
+      <span>Sin compromiso · Por Zoom · 30 minutos</span>
+    </div>
+  </div>
+
+  <a href="https://calendly.com/desiromano/sali_detras_de_la_etiqueta" target="_blank" class="cta-btn">Agendá tu conversación gratuita</a>
+  <p class="cta-note">Cupos limitados · Solo para mujeres de la industria del vino</p>
+
+  <div class="cta-firma">
+    Te espero del otro lado.
+    <strong>Desi Romano · @desiromano_ok</strong>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<div class="footer">
+  <span class="footer-brand">Desi Romano</span>
+  <span class="footer-info">Estrategia · Narrativa · Mujeres del Vino · copydesireeromano@gmail.com</span>
+  <span class="footer-info">© 2026 · Todos los derechos reservados</span>
+</div>
+
+</body>
+</html>
