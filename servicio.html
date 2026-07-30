@@ -3,537 +3,509 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Del otro lado de la etiqueta</title>
+<title>Del otro lado de la etiqueta — DesiRomano</title>
+<meta name="description" content="Un sistema para que la conversación que empieza frente a una copa siga acompañando a cada persona después del evento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --wine:        #470f2b;
-    --wine-deep:   #300a1d;
-    --paper:       #f1e6d9;
-    --paper-dim:   #e7d8c6;
-    --ink:         #271711;
-    --gold:        #b9924f;
-    --rose:        #c1636a;
-    --line:        rgba(39,23,17,0.16);
-    --line-light:  rgba(241,230,217,0.25);
+    --cream:#EDE8DF;
+    --cream-deep:#e3ddcf;
+    --charcoal:#2C2C2C;
+    --coral:#FB6376;
+    --coral-deep:#e14f62;
+    --wine:#6B2737;
+    --wine-deep:#551e2b;
+    --white:#FFFFFF;
+    --serif:'Cormorant Garamond', serif;
+    /* TT Hoves is the brand's licensed sans — falls back to a clean grotesque if not installed locally */
+    --sans:'TT Hoves','Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   }
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Jost', sans-serif;
-    font-weight:400;
-    line-height:1.6;
+    background:var(--cream);
+    color:var(--charcoal);
+    font-family:var(--sans);
+    font-size:18px;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,blockquote{
-    font-family:'Cormorant Garamond', serif;
-    margin:0;
-    font-weight:500;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.72rem;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-  }
-  a{color:inherit;}
   img,svg{display:block;max-width:100%;}
-  section{position:relative;}
+  a{color:inherit;}
+  ::selection{background:var(--coral);color:var(--white);}
+
   .wrap{
     max-width:760px;
     margin:0 auto;
     padding:0 28px;
   }
-  ::selection{background:var(--gold);color:var(--wine-deep);}
-  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
 
-  /* reveal on scroll */
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease, transform .8s ease;}
-  .reveal.is-visible{opacity:1;transform:translateY(0);}
-  @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1;transform:none;transition:none;}
-    html{scroll-behavior:auto;}
+  /* ---------- Monogram ---------- */
+  .monogram{
+    position:relative;
+    width:1em;
+    height:1em;
+    display:inline-block;
+    font-family:var(--serif);
+    font-weight:700;
   }
+  .monogram span{
+    position:absolute;
+    top:0; line-height:1;
+    font-size:1em;
+  }
+  .monogram .m-d{ left:0; color:var(--wine); }
+  .monogram .m-c{ left:0.34em; color:var(--coral); opacity:.92; }
 
-  /* ---------- HERO ---------- */
+  /* ---------- Header ---------- */
+  header{
+    padding:26px 0;
+    border-bottom:1px solid rgba(107,39,55,0.12);
+  }
+  header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    max-width:920px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+  }
+  .brand .monogram{ font-size:26px; width:1.4em; }
+  .brand-word{
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:.18em;
+    color:var(--wine);
+    font-weight:600;
+  }
+  header nav a{
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:.04em;
+    color:var(--charcoal);
+    border:1px solid var(--wine);
+    padding:10px 20px;
+    border-radius:999px;
+    transition:background .2s ease, color .2s ease;
+    white-space:nowrap;
+  }
+  header nav a:hover{ background:var(--wine); color:var(--cream); }
+
+  /* ---------- Hero ---------- */
   .hero{
-    background:radial-gradient(ellipse at 30% -10%, #5c1638 0%, var(--wine) 45%, var(--wine-deep) 100%);
-    color:var(--paper);
-    padding:96px 0 120px;
+    padding:88px 0 72px;
+    text-align:center;
+    position:relative;
     overflow:hidden;
   }
-  .hero .wrap{
-    display:grid;
-    grid-template-columns:1.15fr 0.85fr;
-    gap:56px;
-    align-items:center;
-    max-width:1040px;
-  }
-  .hero-eyebrow{color:var(--rose);margin-bottom:22px;display:block;}
-  .hero h1{
-    font-size:clamp(2.1rem, 4.6vw, 3.15rem);
-    line-height:1.14;
-    color:var(--paper);
-  }
-  .hero h1 em{
-    font-style:italic;
-    color:var(--gold);
-  }
-  .hero p.lede{
-    margin-top:26px;
-    font-size:1.05rem;
-    color:var(--paper-dim);
-    max-width:46ch;
-  }
-
-  /* the label — signature element */
-  .label-card{
-    position:relative;
-    background:var(--paper);
-    color:var(--ink);
-    padding:34px 30px 30px;
-    border-radius:2px;
-    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);
-    transform:rotate(-3.5deg);
-    transition:transform .5s ease;
-  }
-  .label-card:hover{transform:rotate(-1deg) translateY(-4px);}
-  .label-card::before{
-    content:"";
+  .hero .monogram-bg{
     position:absolute;
-    inset:8px;
-    border:1px solid var(--line);
+    top:-40px; left:50%;
+    transform:translateX(-50%);
+    font-size:420px;
+    opacity:.05;
     pointer-events:none;
+    width:1.4em;
   }
-  .label-card .peel{
-    position:absolute;
-    top:-1px;right:-1px;
-    width:56px;height:56px;
-    background:linear-gradient(135deg, transparent 49%, var(--wine-deep) 50%, var(--wine-deep) 52%, var(--paper) 53%);
-    box-shadow:-6px 6px 10px -6px rgba(0,0,0,0.4);
-  }
-  .label-card .eyebrow{color:var(--wine);opacity:0.65;}
-  .label-card h3{
-    font-size:1.5rem;
-    margin-top:10px;
-    line-height:1.25;
-  }
-  .label-card .fine{
-    margin-top:18px;
-    padding-top:16px;
-    border-top:1px dashed var(--line);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.7rem;
-    letter-spacing:0.05em;
-    color:var(--wine);
-    display:flex;
-    justify-content:space-between;
-  }
-
-  @media (max-width:760px){
-    .hero .wrap{grid-template-columns:1fr;}
-    .label-card{transform:rotate(-2deg);justify-self:start;max-width:320px;}
-  }
-
-  /* ---------- INTERES ---------- */
-  .interes{padding:104px 0;}
-  .interes .eyebrow{color:var(--wine);opacity:0.6;}
-  .interes h2{
-    font-size:clamp(1.7rem, 3.4vw, 2.3rem);
-    margin-top:14px;
-    max-width:20ch;
-  }
-  .interes-quote{
-    margin-top:52px;
-    padding-left:26px;
-    border-left:3px solid var(--gold);
-  }
-  .interes-quote p{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1.4rem;
-    line-height:1.5;
-    color:var(--wine);
-  }
-  .interes-quote p + p{margin-top:10px;}
-
-  /* ---------- PROBLEMA (dark) ---------- */
-  .problema{
-    background:var(--wine-deep);
-    color:var(--paper);
-    padding:104px 0;
-  }
-  .problema .eyebrow{color:var(--rose);}
-  .problema h2{
-    color:var(--paper);
-    font-size:clamp(1.7rem, 3.4vw, 2.3rem);
-    margin-top:14px;
-    max-width:22ch;
-  }
-  .cycle{
-    margin-top:52px;
-    display:grid;
-    gap:0;
-    border-top:1px solid var(--line-light);
-  }
-  .cycle .step{
-    display:grid;
-    grid-template-columns:110px 1fr;
-    gap:20px;
-    padding:20px 0;
-    border-bottom:1px solid var(--line-light);
-  }
-  .cycle .step .tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.72rem;
-    letter-spacing:0.14em;
-    color:var(--gold);
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:.28em;
     text-transform:uppercase;
-    padding-top:3px;
+    color:var(--coral);
+    font-weight:600;
+    margin:0 0 22px;
   }
-  .cycle .step p{margin:0;color:var(--paper-dim);}
-  .cycle .step.punch p{
-    color:var(--paper);
-    font-family:'Cormorant Garamond', serif;
-    font-size:1.2rem;
-    font-style:italic;
-  }
-  .whatsapp-line{
-    margin-top:40px;
-    font-family:'Cormorant Garamond', serif;
-    font-size:1.35rem;
-    font-style:italic;
-    color:var(--gold);
-    max-width:38ch;
-  }
-
-  /* ---------- DESEO ---------- */
-  .deseo{padding:104px 0;}
-  .deseo .eyebrow{color:var(--wine);opacity:0.6;}
-  .deseo h2{
-    font-size:clamp(1.7rem, 3.4vw, 2.3rem);
-    margin-top:14px;
-    max-width:24ch;
-  }
-  .deseo p.intro{margin-top:22px;max-width:56ch;color:#4a3226;}
-
-  .paths{
-    margin-top:56px;
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:22px;
-  }
-  .path-card{
-    background:var(--paper);
-    border:1px solid var(--line);
-    padding:26px 22px;
-    position:relative;
-  }
-  .path-card::after{
-    content:"";
-    position:absolute;
-    left:0;right:0;bottom:0;
-    height:3px;
-    background:var(--gold);
-    transform:scaleX(0);
-    transform-origin:left;
-    transition:transform .4s ease;
-  }
-  .path-card:hover::after{transform:scaleX(1);}
-  .path-card .eyebrow{color:var(--rose);}
-  .path-card h3{
-    font-size:1.2rem;
-    margin-top:10px;
-    line-height:1.3;
-  }
-  .path-card p{margin-top:10px;font-size:0.94rem;color:#4a3226;}
-
-  @media (max-width:760px){
-    .paths{grid-template-columns:1fr;}
-  }
-
-  .closing-line{
-    margin-top:56px;
-    padding:28px 0 0;
-    border-top:1px solid var(--line);
-    font-family:'Cormorant Garamond', serif;
-    font-size:1.3rem;
-    font-style:italic;
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(34px,5.4vw,58px);
+    line-height:1.12;
     color:var(--wine);
-    max-width:44ch;
+    margin:0 0 28px;
+    letter-spacing:-0.01em;
   }
-
-  /* ---------- INCLUYE ---------- */
-  .incluye{
-    background:var(--paper-dim);
-    padding:104px 0;
-  }
-  .incluye .eyebrow{color:var(--wine);opacity:0.6;}
-  .incluye h2{
-    font-size:clamp(1.7rem, 3.4vw, 2.3rem);
-    margin-top:14px;
-  }
-  .tags{
-    margin-top:48px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-  }
-  .tags .tag-chip{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:999px;
-    padding:10px 18px 10px 14px;
-    font-size:0.9rem;
-  }
-  .tag-chip .dot{
-    width:7px;height:7px;
-    border-radius:50%;
-    background:var(--rose);
-    flex-shrink:0;
-  }
-  .incluye-note{
-    margin-top:40px;
-    max-width:52ch;
-    color:#4a3226;
-    font-size:0.98rem;
-  }
-
-  /* ---------- CTA ---------- */
-  .cta{
-    background:radial-gradient(ellipse at 70% 110%, #5c1638 0%, var(--wine) 40%, var(--wine-deep) 100%);
-    color:var(--paper);
-    padding:112px 0 100px;
-    text-align:center;
-  }
-  .cta .eyebrow{color:var(--rose);}
-  .cta h2{
-    color:var(--paper);
-    font-size:clamp(1.9rem, 4vw, 2.6rem);
-    margin-top:16px;
-    max-width:22ch;
-    margin-left:auto;
-    margin-right:auto;
-  }
-  .cta p{
-    margin-top:20px;
-    color:var(--paper-dim);
-    max-width:48ch;
-    margin-left:auto;
-    margin-right:auto;
+  .hero-lead{
+    font-size:19px;
+    color:#4a4a4a;
+    max-width:600px;
+    margin:0 auto 36px;
   }
   .btn{
     display:inline-block;
-    margin-top:36px;
-    padding:16px 34px;
-    background:var(--gold);
-    color:var(--wine-deep);
+    background:var(--coral);
+    color:#4a1b28;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.02em;
     text-decoration:none;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.85rem;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    border-radius:2px;
-    transition:transform .25s ease, box-shadow .25s ease;
+    padding:16px 34px;
+    border-radius:999px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    box-shadow:0 10px 24px -10px rgba(251,99,118,.55);
   }
-  .btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 14px 30px -12px rgba(185,146,79,0.55);
+  .btn:hover{ transform:translateY(-2px); background:var(--coral-deep); }
+  .btn-outline{
+    background:transparent;
+    border:1.5px solid var(--wine);
+    color:var(--wine);
+    box-shadow:none;
+  }
+  .btn-outline:hover{ background:var(--wine); color:var(--cream); }
+
+  /* ---------- Sections ---------- */
+  section{ padding:64px 0; }
+  .section-label{
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--coral);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .section-label::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:rgba(107,39,55,.18);
+  }
+  h2{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(26px,3.6vw,36px);
+    color:var(--wine);
+    line-height:1.2;
+    margin:0 0 22px;
+  }
+  p{ margin:0 0 20px; color:#3a3a3a; }
+  .lede{ font-size:20px; color:var(--charcoal); }
+
+  .emphasis-block{
+    border-left:2px solid var(--coral);
+    padding:2px 0 2px 24px;
+    margin:32px 0;
+  }
+  .emphasis-block p{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:22px;
+    color:var(--wine);
+    line-height:1.4;
+    margin:0 0 8px;
   }
 
-  footer{
-    background:var(--wine-deep);
-    color:var(--paper-dim);
+  .pull-quote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:26px;
+    color:var(--wine);
     text-align:center;
-    padding:26px 0;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.72rem;
-    letter-spacing:0.08em;
+    line-height:1.35;
+    max-width:600px;
+    margin:44px auto;
+  }
+
+  /* ---------- Feature list (Deseo) ---------- */
+  .features{
+    background:var(--wine);
+    border-radius:18px;
+    padding:44px 36px;
+    margin-top:40px;
+  }
+  .features h3{
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--coral);
+    font-weight:600;
+    margin:0 0 26px;
+  }
+  .feature-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px 28px;
+    list-style:none;
+    margin:0; padding:0;
+  }
+  .feature-grid li{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    color:var(--cream);
+    font-size:16px;
+    line-height:1.45;
+  }
+  .feature-grid .ico{
+    flex:none;
+    width:30px; height:30px;
+    border-radius:50%;
+    background:rgba(251,99,118,.18);
+    color:var(--coral);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:15px;
+  }
+  .features-note{
+    margin:28px 0 0;
+    color:rgba(237,232,223,.75);
+    font-size:14px;
+    font-style:italic;
+    font-family:var(--serif);
+  }
+
+  /* ---------- Acción / CTA final ---------- */
+  .cta-final{
+    text-align:center;
+    background:var(--white);
+    border-radius:20px;
+    padding:64px 32px;
+    margin:20px 0 0;
+  }
+  .cta-final h2{ margin-bottom:16px; }
+  .cta-final .lede{ max-width:520px; margin:0 auto 34px; }
+  .cta-buttons{
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:48px 0 60px;
+    text-align:center;
+  }
+  footer .monogram{ font-size:30px; width:1.4em; margin:0 auto 14px; }
+  footer .brand-word{ display:block; margin-bottom:6px; }
+  footer .tagline{
+    font-family:var(--serif);
+    font-style:italic;
+    color:var(--wine);
+    font-size:16px;
+  }
+  footer .fine{
+    margin-top:22px;
+    font-size:12px;
+    color:#8a8a8a;
+    letter-spacing:.03em;
+  }
+
+  @media (max-width:640px){
+    .feature-grid{ grid-template-columns:1fr; }
+    header nav a{ padding:9px 16px; font-size:13px; }
+    .features{ padding:32px 24px; }
+    .cta-final{ padding:48px 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .btn, .reveal{ transition:none; }
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:none;
   }
 </style>
 </head>
 <body>
 
-<section class="hero">
+<header>
   <div class="wrap">
-    <div>
-      <span class="eyebrow hero-eyebrow">Del otro lado de la etiqueta</span>
-      <h1>¿Qué se lleva una persona de tu evento, además de tu <em>WhatsApp</em>?</h1>
-      <p class="lede">Cada vez hay más catas y los eventos de vino están a la orden del día. Basta con hacer una búsqueda para encontrar decenas de propuestas nuevas cada semana. Y eso habla de algo muy bueno: hay más personas interesadas en el mundo del vino y una industria que crece.</p>
-<p>Ahora… cuando la oferta crece, aparece un nuevo desafío.</p>
+    <a class="brand" href="#top">
+      <span class="monogram"><span class="m-d">D</span><span class="m-c">R</span></span>
+      <span class="brand-word">DESIROMANO</span>
+    </a>
+    <nav>
+      <a href="#accion">Conversemos</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <span class="monogram monogram-bg" aria-hidden="true"><span class="m-d">D</span><span class="m-c">R</span></span>
+  <div class="wrap">
+    <p class="eyebrow">Del otro lado de la etiqueta</p>
+    <h1>¿Qué se lleva una persona de tu evento, además de tu WhatsApp?</h1>
+    <p class="hero-lead">
+      Las catas y los eventos de vino están a la orden del día. Cada vez hay más
+      personas interesadas en este mundo — y con la oferta creciendo, aparece
+      una pregunta nueva: ¿qué hace que alguien te recuerde a vos, que vuelva,
+      que tu nombre sea el primero que aparezca?
+    </p>
+    <a class="btn" href="#accion">Quiero ir del otro lado de la etiqueta</a>
+  </div>
+</section>
+
+<section id="atencion">
+  <div class="wrap">
+    <p class="lede">
+      Cuando una persona termina una cata puede llevarse muchas cosas:
+    </p>
+
+    <div class="emphasis-block">
+      <p>El recuerdo de un vino. Una foto. Tu contacto.</p>
+      <p> Pero lo que realmente define si vuelve o no es aquello que permanece cuando la experiencia termina.</p>
     </div>
-    <div class="label-card reveal">
-      <div class="peel"></div>
-      <span class="eyebrow">Contenido</span>
-      <h3>Una guía con tu voz, un vínculo que sigue después del brindis.</h3>
-      <div class="fine">
-        <span>QR · Guía · Comunidad</span>
-        <span>750ml</span>
+
+    <p>
+      <em>Del otro lado de la etiqueta</em> nació para que esa presencia siga
+      construyendo confianza, incluso cuando el evento terminó.
+    </p>
+    <p> 
+      Las personas ya no llegan a una cata solamente para probar un vino.
+      Llegan buscando historias que las emocionen, 
+      alguien que las ayude a elegir con seguridad y 
+     una experiencia que puedan compartir con otros. 
+    </p>
+    
+     <p>Buscan un vino para un cumpleaños, una reunión con amigos, un aniversario o simplemente para regalar. Pero, sobre todo, buscan a alguien en quien confiar.</p>
+    <p>
+      Porque el vino puede ser complejo para quien recién empieza. 
+      Y ahí aparecés vos, traduciendo un mundo que muchas veces parece reservado para quienes saben. 
+      Cuando eso sucede, la copa deja de ser solamente
+      una copa: se convierte en una conversación.
+    </p>
+    <p class="pull-quote">Y esa conversación termina teniendo mucho más valor que la degustación.</p>
+  </div>
+</section>
+
+<section id="interes">
+  <div class="wrap">
+    <p class="section-label">Dale algo más valioso que información</p>
+    <h2>Lo que realmente se lleva una persona de tu evento</h2>
+    <p class="lede">No es solamente el vino. Es el recuerdo que permanece cuando la experiencia termina.</p>
+
+    <div class="emphasis-block">
+      <p>Cómo la hiciste sentir.</p>
+      <p>La tranquilidad con la que respondiste cada pregunta.</p>
+      <p>La confianza que transmitiste al recomendar una etiqueta.</p>
+    </div>
+
+    <p>
+      Ese recuerdo es el que construye recomendaciones. El que genera nuevas
+      compras. El que hace que una persona vuelva a buscarte.
+    </p>
+    <p>
+      Después de escuchar durante años a mujeres del mundo del vino, encontré
+      un patrón que se repetía en todas: preparan un evento durante semanas,
+      convocan personas, construyen una experiencia inolvidable — y al día
+      siguiente sienten que vuelven a empezar. No porque el evento haya salido
+      mal, al contrario: porque toda esa confianza que construyeron durante
+      unas horas queda sostenida únicamente por un contacto de WhatsApp.
+    </p>
+    <p>
+      Pensalo un momento: ¿cuántas veces guardaste un número con la intención
+      de escribir "después" y ese después nunca llegó? Con tus clientes pasa
+      exactamente lo mismo.
+    </p>
+    <p class="pull-quote">El desafío nunca fue hacer más eventos. Es lograr que esa conversación encuentre una forma natural de continuar.</p>
+  </div>
+</section>
+
+<section id="deseo">
+  <div class="wrap">
+    <p class="section-label">Deseo</p>
+    <h2>Así sigue la conversación</h2>
+    <p>
+      Diseñé un sistema para que la conversación que empezó frente a una copa
+      siga acompañando a cada persona después del evento — con la misma
+      calidez, el mismo criterio y la misma manera de comunicar que hicieron
+      que confiara en vos desde el primer encuentro.
+    </p>
+    <p>
+      Cada asistente escanea un QR y accede a una guía personalizada con los
+      vinos que degustó, escrita con tu identidad y tu forma de contar el
+      vino. Mientras la recorre, el sistema organiza la información de cada
+      persona y entiende qué tipo de vínculo quiere construir con tu marca.
+    </p>
+    <p>
+      Porque no todas las personas necesitan lo mismo: quien quiere seguir
+      aprendiendo recibe contenido pensado para profundizar, quien está listo
+      para comprar encuentra el camino, quien busca pertenecer encuentra una
+      comunidad. Y vos obtenés lo más valioso que puede dejar un evento:
+      personas que ya confiaron en vos y que ahora tienen una forma simple de
+      seguir cerca.
+    </p>
+    <p class="pull-quote">La experiencia no termina cuando se sirve la última copa. Continúa cuando la conversación también continúa.</p>
+
+    <div class="features">
+      <h3>¿Qué incluye?</h3>
+      <ul class="feature-grid">
+        <li><span class="ico">D</span> Guía de degustación personalizada, con tu identidad</li>
+        <li><span class="ico">C</span> QR listo para imprimir y usar en todos tus eventos</li>
+        <li><span class="ico">D</span> Formulario de registro inteligente</li>
+        <li><span class="ico">C</span> Clasificación automática de contactos según sus intereses</li>
+        <li><span class="ico">D</span> Correos personalizados para cada tipo de público</li>
+        <li><span class="ico">C</span> Comunidad propia de WhatsApp</li>
+        <li><span class="ico">D</span> Sistema para solicitar testimonios en el momento indicado</li>
+      </ul>
+      <p class="features-note">Lo configuramos una sola vez. Después, el sistema acompaña cada evento para que siga generando valor mucho después del último brindis.</p>
+    </div>
+  </div>
+</section>
+
+<section id="accion">
+  <div class="wrap">
+    <div class="cta-final">
+      <p class="section-label" style="justify-content:center;">Acción</p>
+      <h2>¿Y si cada evento siguiera construyendo relaciones, incluso cuando las copas ya están vacías?</h2>
+      <p class="lede">
+        Cada evento demanda tiempo, dedicación y una enorme cuota de
+        presencia. Ese esfuerzo merece seguir dando frutos mucho después de
+        que termina la degustación. Si querés que cada encuentro siga
+        generando recomendaciones, nuevas oportunidades y personas que vuelvan
+        a elegirte, conversemos.
+      </p>
+      <div class="cta-buttons">
+        <a class="btn" href="#" target="_blank" rel="noopener">Quiero conocer Del otro lado de la etiqueta</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="interes">
-  <div class="wrap reveal">
-    <span class="eyebrow">Craaste un vínculo</span>
-    <h2>La gente asiste a una cata o feria, buscando algo más que un buen vino</h2>
-    <div class="interes-quote">
-      <p>¿Qué hace que alguien te recuerde a vos?</p>
-      <p>¿Qué hace que vuelva?</p>
-      <p>¿Qué hace que, cuando piense en una próxima botella o en una nueva experiencia, tu nombre sea el primero que aparezca?</p>
-    </div>
-  </div>
-</section>
-
-<section class="problema">
-  <div class="wrap reveal">
-    <span class="eyebrow"> ¿Buscás que vuelvan? </span>
-    <h2>Extendé la experincia más allá del descorche final </h2>
-    <div class="cycle">
-      <div class="step">
-        <span class="tag">Las personas ya no buscan un vino.</span>
-        <p>Llegan buscando historias que las emocionen, alguien que las ayude a elegir con seguridad y una experiencia que puedan compartir con otros.
-</p>
-      </div>
-      <div class="step punch">
-        <span class="tag">Ahí aparecés vos</span>
-        <p>Buscan un vino para un cumpleaños, una reunión con amigos, un aniversario o simplemente para regalar.</p>
-<p>Pero, sobre todo, buscan a alguien en quien confiar.</p>
-<p>Porque el vino puede ser complejo para quien recién empieza.</p><p>Traduciendo un mundo que muchas veces parece reservado para quienes saben.</p>
-<p>Cuando eso sucede, la copa deja de ser solamente una copa.</p>
-<p>Se convierte en una conversación.</p>
-<p>Y esa conversación termina teniendo mucho más valor que la degustación.</p>
-<p>Ese es, para mí, el verdadero valor de una cata.</p>
-
-      </div>
-    </div>
-    <p class="whatsapp-line">Entonces, ¿qué es lo que realmente se lleva una persona de cada una de las ferias o catas que hacés?</p>
-   <p>No es solamente el vino.
- <p>Es el recuerdo que permanece cuando la experiencia termina.</p>
-
- <p>Ese recuerdo es el que construye recomendaciones.</p>
-
- <p>El que genera nuevas compras.</p>
-
- <p>El que hace que una persona te busque y te recomiende</p>
-
- <p class="whatsapp-line">Del otro lado de la etiqueta nace</p>
-<p>Después de escuchar durante años a mujeres del mundo del vino.</p> 
- 
-<p>Preparás el paso a paso de la cata, seleccionás los vinos de la feria, durante semanas.</p>
-<p>Convocás a las personas.</p>
-<p>Constrís una experiencia inolvidable.</p>
-<p>Pero al día siguiente sentís que volvés a empezar.</p>
-<p>Es un patrón que se repite en todas.</p>
-<p>¿Pero qué pasa con toda la confianza que construyeron durante esas horas, si no tenés una estrategia post-evento? </p>
-
-<p>Queda sostenida únicamente por un contacto de WhatsApp.</p>
-
-<p>Pensá un momento...</p>
-<p>¿Cuántas veces guardaste un número con la intención de escribir "después" y ese después nunca llegó?</p>
-
-<p>Eso mismo pasa exactamente con las personas que asistieron esa noche.</p>
-
-<p>Tu desafío nunca fue hacer más eventos.</p>
-
-<p>Tu desafío es lograr que esa conversación encuentre una forma natural de continuar.</p>
-</div>
-</section>
-
-<section class="deseo">
-  <div class="wrap reveal">
-    <span class="eyebrow">Cómo funciona</span>
-    <h2>Seguí la conversación, con tu misma forma de contar el vino.</h2>
-    <p class="intro">Eso es exactamente lo que hace Del otro lado de la etiqueta.
-
-Diseñé un sistema para que la conversación que empezó frente a una copa siga acompañando a cada persona después del evento, con la misma calidez, el mismo criterio y la misma manera de comunicar que hicieron que confiara en vos desde el primer encuentro.
-
-Cada asistente escanea un QR y accede a una guía personalizada con los vinos que degustó, escrita con tu identidad. Mientras la recorre, el sistema entiende qué vínculo quiere construir con vos — porque no todas las personas necesitan lo mismo.</p>
-
-    <div class="paths">
-      <div class="path-card">
-        <span class="eyebrow">Quien quiere seguir aprendiendo recibe contenido pensado para profundizar.</span>
-        <h3>Quien está listo para comprar encuentra el camino.</h3>
-        <p>Quien busca pertenecer encuentra una comunidad.</p>
-      </div>
-      <div class="path-card">
-        <span class="eyebrow">Y vos obtenés lo más valioso que puede dejar un evento:</span>
-        <h3>personas que ya confiaron en vos</h3>
-        <p>y que ahora tienen una forma simple de seguir cerca.</p>
-      </div>
-      <div class="path-card">
-        <span class="eyebrow">Con el tiempo, esa presencia sostenida genera algo muy difícil de conseguir solamente con un evento.</span>
-        <h3>Personas que vuelven.</h3>
-        <p>Que recomiendan tu trabajo.</p>
-<p>Que comparten su experiencia.</p>
-<p>Y que mantienen vivo el vínculo entre un encuentro y el siguiente.</p>
-<p>Porque la experiencia no termina cuando se sirve la última copa.</p>
-      </div>
-    </div>
-
-    <p class="closing-line">Ocupar un lugar en la memoria de las personas es mucho más poderoso que aparecer una sola vez frente a ellas.</p>
-  </div>
-</section>
-
-<section class="incluye">
-  <div class="wrap reveal">
-    <span class="eyebrow">Qué hay del otro lado de la etiqueta</span>
-    <p>Hay orden. Hay trabajo y hay compromiso. Porque tu negocio del vino, necesita una estructura que lo sostenga.</p>
-<h2>Se configura una sola vez. Acompaña cada evento.</h2>
-<p>¿Cómo funciona?</p>
-<p>Agendás una reunión virtual en el link. Me contás dónde estás parada hoy con tu negocio. Evaluamos si la propuesta es lo que estás necesitando. Y en una semana tenés funcionando tu sistema humanizado post catas y ferias.</p>
-<h2>No pierdas nunca más una aoportunidad de negocios, por depender de la memoria.</h2>
-<p>¿Qué recibís?</p><p>Material completo, editable para que puedas adaptar a cada próximo evento.</p>
-<div class="tags">
-      <span class="tag-chip"><span class="dot"></span>Guía de degustación de los vinos seleccionados esa noche, personalizada con tu identidad</span>
-      <span class="tag-chip"><span class="dot"></span>QR listo para imprimir y usar en todos tus eventos, con tu paleta de colores y tipografía</span>
-      <span class="tag-chip"><span class="dot"></span>Formulario de registro inteligente, para brindarles un servicio personalizado a cada cliente</span>
-      <span class="tag-chip"><span class="dot"></span>Clasificación de contactos según sus intereses</span>
-      <span class="tag-chip"><span class="dot"></span>Correos estratégicos para manter y alimentar el interés en vos</span>
-      <span class="tag-chip"><span class="dot"></span>Comunidad propia de WhatsApp</span>
-      <span class="tag-chip"><span class="dot"></span>Sistema para pedir testimonios en el momento indicado</span>
-    </div>
-    <p class="incluye-note">Del otro lado de la etiqueta extiende la experiencia presencial incluso después del brindis final.</p>
-  </div>
-</section>
-<h2>Incluye BONUS</h2>
-<p>Cuadernillo de herramientas, para que vos misma puedas tener control sin ser experta. Clases explicativas grabadas. Y soporte durante un mes para que apliques lo creado a tus eventos, y evaluamos los resultados</p>
-<p>Junto al material te llevás</p><h2>La planilla para leer vos misma tu crecimiento cuando termina el mes de soporte. Y el TERMÓMETRO de Vínculos, que te ayuda a identificar la concreción de tus clientes.</h2>
-<section class="cta">
-  <div class="wrap reveal">
-    <span class="eyebrow">Si querés seguir conversando</span>
-    <h2>Descorcho vinitos incómodos cada semana, dentro de mi comunidad de WhatsApp</h2>
-    <p>Quiero mostrarte cómo adaptar Del otro lado de la etiqueta a tu forma de trabajar, para que cada encuentro siga construyendo relaciones incluso cuando las copas ya están vacías.</p>
-    <a class="btn" href="https://wa.me/5491157298532" target="_blank" rel="noopener">Quiero conocer Del otro lado de la etiqueta</a>
-  </div>
-</section>
-
-<footer>Del otro lado de la etiqueta</footer>
+<footer>
+  <span class="monogram"><span class="m-d">D</span><span class="m-c">C</span></span>
+  <span class="brand-word">DESIROMANO</span>
+  <p class="tagline">Ocupar un lugar en la memoria de las personas es más poderoso que aparecer una sola vez frente a ellas.</p>
+  <p class="fine">© <span id="year"></span> DesiRomano — Del otro lado de la etiqueta</p>
+</footer>
 
 <script>
-  const items = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Gentle reveal-on-scroll for section blocks, respecting reduced motion
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('section').forEach(function(el){ el.classList.add('reveal'); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-    items.forEach(el => io.observe(el));
-  } else {
-    items.forEach(el => el.classList.add('is-visible'));
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
   }
 </script>
 
